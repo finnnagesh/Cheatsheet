@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { datacontext } from "../Context/IdContext";
 
-export default function JoinGroup({ onGroupJoined }) {
+export default function JoinGroup() {
   const [code, setCode] = useState("");
-  const [id , setid] = useState("")
-
+  const { idg, setidg} = useContext(datacontext);
+  const navigate = useNavigate();
   const handleJoin = async () => {
     const res = await fetch("http://127.0.0.1:8000/api/join/", {
       method: "POST",
@@ -12,12 +15,19 @@ export default function JoinGroup({ onGroupJoined }) {
     });
     const data = await res.json();
     if (res.ok) {
+
+        const newUser = {
+          id: data.id,
+          code: code,
+        };
+        localStorage.setItem("user", JSON.stringify(newUser));
         console.log(res)
-        setid(data.code)
+        setidg(data.id)
+        console.log(data.id)
+        navigate(`/group-room/${data.id}`);
     } else {
       alert("Invalid group code");
     }
-    onGroupJoined(id)
   };
 
   return (

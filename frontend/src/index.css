@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+pre {
+  /* background-color: #f4f4f4; */
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap; /* wrap long lines */
+}
